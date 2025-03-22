@@ -14,5 +14,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark", "cupcake"], // Customize themes here
+    base: true, // Enable or disable DaisyUI base styles
+    styled: true, // Enable or disable component styles
+    utils: true, // Enable or disable utility classes
+    rtl: false, // Enable Right-to-Left support
+    logs: false, // Disable DaisyUI logs in console
+  },
 }

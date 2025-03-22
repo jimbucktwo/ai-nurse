@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.15",
     "@types/node": "22.5.5",
     "@types/react": "18.3.8",
     "@types/react-dom": "18.3.0",
@@ -22,7 +23,10 @@
     "postcss": "^8.4.47",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "tailwindcss": "3.4.12",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.6.2"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.9"
   }
 }
