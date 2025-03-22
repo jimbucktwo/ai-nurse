@@ -29,14 +29,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter} antialiased`}>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <Navbar/>
-              <UserButton />
-            </SignedIn>
+            <Navbar />
           </header>
           {children}
         </body>
