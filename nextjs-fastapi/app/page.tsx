@@ -6,8 +6,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div>
-        Hello
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        Welcome to NURSAI! <br />
       </div>
     </>
     
