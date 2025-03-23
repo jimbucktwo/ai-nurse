@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import OpenAI from "openai";
 
 export default function ChatBox() {
+  const openai = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true,});
   const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -32,18 +35,36 @@ export default function ChatBox() {
     localStorage.setItem("chat_timestamp", Date.now().toString());
   }, [messages]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
     const newMessage = { id: Date.now(), sender: "user", text: input };
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
 
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+            role: "system",
+            content:  `want you to act like an AI Nurse, I want you to ask me my age, gender and pain severity and then ask foer my symptoms and then possibly give a options of what my diagnosis could be.  Also ask them about how long are they feeling these symptoms or when did they might have noticed it. Also include the severity score to it maybe somehting like "Total Score Calculation:
+            •    Low (1-3 points): Self-care (fluids, rest, monitor)
+            •    Moderate (4-6 points): Schedule a virtual nurse consultation
+            •    High (7-9 points): See a doctor within 24 hours
+            •    Critical (10+ points): Urgent care or ER recommendation "
+        You should use information provided by Mayo Clinic website (https://www.mayoclinic.org/diseases-conditions) or (https://www.mayoclinic.org/symptom-checker/select-symptom/itt-20009075) or (https://www.mayoclinic.org/drugs-supplements) get the most appropriate information.,
+        `},
+          {
+              role: "user",
+              content: input,
+          },
+      ],
+  });
     // Simulate AI response and store history summary
     setTimeout(() => {
       const aiResponse = {
         id: Date.now() + 1,
         sender: "ai",
-        text: "Thanks for the information. I'll help you with that.",
+        text: String(completion.choices[0].message.content), // Use the AI's response
       };
       setMessages((prev) => [...prev, aiResponse]);
 
