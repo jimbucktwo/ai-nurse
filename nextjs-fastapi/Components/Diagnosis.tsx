@@ -1,5 +1,4 @@
-
-
+"use client"
 const severityColors = (score) => {
     if (score >= 8) return "bg-red-500"; // High severity
     if (score >= 5) return "bg-yellow-500"; // Medium severity
@@ -35,31 +34,32 @@ export default function Diagnosis() {
     }
 
     return (
-        <div className="flex flex-col w-full justify-center">
+        <div className="flex flex-col w-full justify-center overflow-y-scroll">
                 <h1 className="flex text-3xl font-bold justify-center">Diagnosis Report</h1>
-                <div className="flex flex-col items-center justify-center h-screen ">
-                    <div className="p-6 max-w-2xl mx-auto">
-                        {/* User Details */}
-                        <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-4">
-                            <h2 className="text-lg font-bold">Patient Details</h2>
-                            <p><strong>Age:</strong> {data.age}</p>
-                            <p><strong>Gender:</strong> {data.gender}</p>
-                            <p><strong>Symptoms:</strong> {data.symptoms}</p>
-                        </div>
-
-                        {/* Pre-diagnosis Cards */}
-                        <h3 className="text-lg font-bold mb-2">Pre-Diagnosis</h3>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {data["pre-diagnosis"].map((item, index) => (
-                                <div key={index} className={`p-4 rounded-lg shadow-md ${severityColors(item.severityScore)}`}>
-                                    <h4 className="text-white font-bold">{item.name} ({item.confidence * 100}%)</h4>
-                                    <p className="text-white"><strong>Severity:</strong> {item.severityScore}</p>
-                                    <p className="text-white"><strong>Description:</strong> {item.description}</p>
-                                    
-                                </div>
-                            ))}
-                        </div>
+                <div className="flex flex-col items-center justify-center h-full">
+                <div className="p-6 max-w-4xl mx-auto">
+                    {/* Patient Details Card */}
+                    <div className="card bg-base-100 shadow-xl p-6 mb-6">
+                        <h2 className="card-title text-xl">Patient Details</h2>
+                        <p><strong>Age:</strong> {data.age}</p>
+                        <p><strong>Gender:</strong> {data.gender}</p>
+                        <p><strong>Symptoms:</strong> {data.symptoms}</p>
                     </div>
+
+                    {/* Pre-Diagnosis Cards */}
+                    <h3 className="text-xl font-bold mb-4">Suggested Diagnosis</h3>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {data["pre-diagnosis"].map((item, index) => (
+                            <div key={index} className="card shadow-xl">
+                                <div className={`card-body rounded-lg ${severityColors(item.severityScore)}`}>
+                                    <h4 className="card-title">{item.name} <span className="badge badge-neutral">{(item.confidence * 100).toFixed(0)}%</span></h4>
+                                    <p><strong>Severity:</strong> {item.severityScore}</p>
+                                    <p><strong>Description:</strong> {item.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 </div>
             </div>
     )
