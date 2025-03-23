@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ChatSummarySchema = new mongoose.Schema({
+  user_id: {
+    type: String,
+    required: true,
+  },
   age: {
     type: Number,
     required: true,

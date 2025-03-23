@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.1.6",
     "@clerk/nextjs": "^6.12.8",
     "@tailwindcss/postcss": "^4.0.15",
     "@types/node": "22.5.5",
