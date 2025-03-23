@@ -3,7 +3,7 @@ import OpenAI from "openai";
 
 export default function ChatBox() {
   const openai = new OpenAI({
-    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true,});
+    apiKey: process.env.OPENAI_API_KEY, dangerouslyAllowBrowser: true,});
   const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
