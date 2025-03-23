@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
-import ChatSummary from "../model/mongo_model"; // Adjust the import path as necessary
+import Report from "../model/mongo_model"; // Adjust the import path as necessary
 
 // Connect to MongoDB only once
 let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
   try {
-    await mongoose.connect(process.env.MONGODB_URI!, {
+    await mongoose.connect(process.env.MONGO_URI!, {
       dbName: "Patients",
     });
     isConnected = true;
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Insufficient data to save report." }, { status: 400 });
     }
 
-    const summary = await ChatSummary.create(result);
+    const summary = await Report.create(result);
     return NextResponse.json(summary);
   } catch (err) {
     console.error("❌ Failed to parse or save:", err);
