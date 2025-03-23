@@ -1,78 +1,68 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
-import Report from "../model/mongo_model"; // alias for your Report collection
+import ChatSummary from "../model/mongo_model"; // Adjust the import path as necessary
 
+// Connect to MongoDB only once
 let isConnected = false;
+async function connectDB() {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(process.env.MONGODB_URI!, {
+      dbName: "Patients",
+    });
+    isConnected = true;
+    console.log("✅ Connected to MongoDB");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+  }
+}
 
 export async function POST(req: Request) {
   try {
-    // ⛓ Ensure DB is connected (only once)
-    if (!isConnected) {
-      await mongoose.connect(process.env.MONGODB_URI!, {
-        dbName: "Patients",
-      });
-      isConnected = true;
-    }
+    await connectDB();
+    const body = await req.json();
+    const { userId, conversation } = body;
 
-    const { userId, conversation } = await req.json();
-
-    console.log("📨 Received from client:", { userId, conversation });
+    console.log("📨 Received from client:", JSON.stringify(body, null, 2));
 
     const fullText = conversation.map((m: any) => m.text).join(" ");
     console.log("🧠 Full text for extraction:", fullText);
 
-    // 🧪 Improved Regex Extraction
-    const ageMatch = fullText.match(/\b(\d{1,3})[-\s]*year[-\s]*old\b|\b(?:age|Age)[^\d]*(\d{1,3})\b/);
-    const genderMatch = fullText.match(/\b(male|female|other)\b/i);
-    const severityMatch = fullText.match(/(?:severity.*?score|score:)\s*(\d+)/i);
-    const symptomMatch = fullText.match(/(?:symptom[s]?[:\-]?\s*)([^.\n]+)/i);
-    const diagnosisMatch = fullText.match(/possible considerations:([\s\S]*?)Total Score/i);
-    const remedyMatch = fullText.match(/recommendation:\s*- .*?: (.*?)[\n.]/i);
+    const ageMatch = fullText.match(/(?:age\s*[:\-]?\s*)(\d{1,3})/i);
+    const genderMatch = fullText.match(/\b(male|female|non-binary|other)\b/i);
+    const severityMatch = fullText.match(/(?:severity[^\d]*)(\d{1,2})/i);
+    const symptomMatch = fullText.match(/symptoms?[:\-]?\s*([^\.\n]+)/i);
+    const diagnosisMatch = fullText.match(/diagnosis(?:es)?[:\-]?\s*(.*?)(?:score|recommendation|$)/i);
+    const remedyMatch = fullText.match(/recommendation[:\-]?\s*(.*?)(?:\n|$)/i);
 
-    console.log("🧪 Extraction results:", {
-      age: ageMatch?.[1] || ageMatch?.[2],
-      gender: genderMatch?.[1],
-      severity: severityMatch?.[1],
-      symptoms: symptomMatch?.[1],
-      diagnosis: diagnosisMatch?.[1],
-      remedy: remedyMatch?.[1],
-    });
+    const pre_diagnosis = diagnosisMatch?.[1]
+      ?.split(/,|and/)
+      ?.map((s: string) => s.trim()) || [];
 
-    // ⏳ Only save if we have at least some info
-    if (
-      ageMatch || genderMatch || severityMatch ||
-      symptomMatch || diagnosisMatch || remedyMatch
-    ) {
-      const saved = await Report.create({
-        userId,
-        age: ageMatch?.[1] ? parseInt(ageMatch[1]) :
-             ageMatch?.[2] ? parseInt(ageMatch[2]) : undefined,
-        gender: genderMatch?.[1]?.toLowerCase() || undefined,
-        symptoms: symptomMatch?.[1]?.trim() || undefined,
-        pre_diagnosis: diagnosisMatch?.[1]
-          ? diagnosisMatch[1]
-              .split(/[\n•\d-]+/)
-              .map((s: string) => s.trim())
-              .filter(Boolean)
-          : [],
-        severityScore: severityMatch?.[1]
-          ? parseInt(severityMatch[1])
-          : undefined,
-        possible_remedy: remedyMatch?.[1]
-          ? remedyMatch[1]
-              .split(/,|and/)
-              .map((r: string) => r.trim())
-          : [],
-      });
+    const possible_remedy = remedyMatch?.[1]
+      ?.split(/,|and/)
+      ?.map((r: string) => r.trim()) || [];
 
-      console.log("✅ Saved summary:", saved);
-      return NextResponse.json(saved);
-    } else {
-      console.log("🟡 Not enough info to save summary yet.");
-      return NextResponse.json({ message: "Not enough info to save summary yet." });
+    const result = {
+      userId,
+      age: ageMatch?.[1] || null,
+      gender: genderMatch?.[1] || null,
+      symptoms: symptomMatch?.[1]?.trim() || null,
+      pre_diagnosis,
+      severityScore: severityMatch?.[1] ? parseInt(severityMatch[1]) : null,
+      possible_remedy,
+    };
+
+    console.log("🧪 Extraction results:", result);
+
+    if (!result.age && !result.pre_diagnosis.length) {
+      return NextResponse.json({ error: "Insufficient data to save report." }, { status: 400 });
     }
-  } catch (error) {
-    console.error("❌ Failed to parse or save:", error);
+
+    const summary = await ChatSummary.create(result);
+    return NextResponse.json(summary);
+  } catch (err) {
+    console.error("❌ Failed to parse or save:", err);
     return NextResponse.json({ error: "Failed to extract or save summary." }, { status: 500 });
   }
 }
