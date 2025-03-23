@@ -16,7 +16,7 @@ function Navbar(){
   return(
     <div className="navbar bg-base-110 ">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl" onClick={() => router.push("./Landing")}>NURSAI</a>
+        <a className="btn btn-ghost text-xl" onClick={() => router.push("./Landing")}><img src="./applogo.png" className="w-7 rounded-md"/> NURSAI</a>
       </div>
       <div className="flex-none flex gap-4">
 
