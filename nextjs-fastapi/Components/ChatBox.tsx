@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import OpenAI from "openai";
 import { useAuth } from "@clerk/nextjs";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
+import router from "next/router";
 
 export default function ChatBox() {
   const { userId } = useAuth();
@@ -51,6 +52,7 @@ export default function ChatBox() {
         console.error("❌ Report error:", result.error);
       } else {
         console.log("✅ Report generated:", result);
+        router.push(`/report/${result._id}`);
       }
     } catch (err) {
       console.error("❌ Auto-report error:", err);
@@ -105,7 +107,7 @@ export default function ChatBox() {
   }, [messages]);
 
   return (
-    <div className="flex-1 m-4 min-h-[80vh] bg-base-100 p-6 rounded-2xl shadow-md overflow-hidden flex flex-col">
+    <div className="flex-1 m-4 h-[80vh] bg-base-100 p-6 rounded-2xl shadow-md overflow-hidden flex flex-col">
       <h1 className="text-xl font-bold mb-4">🩺 Chat</h1>
 
       {/* Chat messages */}

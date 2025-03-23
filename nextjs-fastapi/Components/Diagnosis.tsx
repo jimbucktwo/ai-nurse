@@ -1,5 +1,5 @@
 "use client"
-const severityColors = (score) => {
+const severityColors = (score: number) => {
     if (score >= 8) return "bg-red-500"; // High severity
     if (score >= 5) return "bg-yellow-500"; // Medium severity
     return "bg-green-500"; // Low severity
