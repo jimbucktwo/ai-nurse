@@ -7,6 +7,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
+<<<<<<< Updated upstream
 const Navbar = () => (
   <div className="navbar bg-base-110 ">
     <div className="flex-none">
@@ -33,6 +34,18 @@ const Navbar = () => (
       <a className="btn btn-ghost text-xl">NURSAI</a>
     </div>
     <div className="flex-none flex gap-4">
+=======
+function Navbar(){
+  const path = usePathname();
+  const router = useRouter();
+  
+  return(
+    <div className="navbar bg-base-110 ">
+      <div className="flex-1">
+        <a className="btn btn-ghost text-xl" onClick={() => router.push("./Landing")}>NURSAI</a>
+      </div>
+      <div className="flex-none flex gap-4">
+>>>>>>> Stashed changes
         <SignedOut>
             <SignInButton />
             <SignUpButton />

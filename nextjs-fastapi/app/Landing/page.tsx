@@ -19,20 +19,61 @@ export default function LandingPage(){
                     </div>
                 </div>
             </div>
-            {/* <div className="card lg:card-side bg-base-100 shadow-sm">
-                <figure>
-                    <img
-                        src="./nurse.jpg"
-                        alt="Nurse" />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title">Introduction</h2>
-                    <p>Don't have an account yet! Create one and get started.</p>
-                    <div className="card-actions justify-end">
-                        <SignUpButton className="btn btn-outline btn-primary" />
+            <div>
+                <div className="card lg:card-side bg-base-100 shadow-sm">
+                    <figure>
+                        <img
+                            src="./handshake.jpeg"
+                            alt="Nurse" />
+                    </figure>
+                    <div className="card-body">
+                        <h2 className="card-title">Introduction</h2>
+                        <p>NursAI is an online platform dedicated to provide users simple answers to their puzzling medical questions</p>
                     </div>
                 </div>
-            </div> */}
+                <div className="card lg:card-side bg-base-100 shadow-sm">
+                    <div className="card-body">
+                        <h2 className="card-title">Goals</h2>
+                        <p>Achieve the level of proficience you deserve</p>
+                    </div>
+                    <figure>
+                        <img
+                            src="./goals.jpeg"
+                            alt="Nurse" />
+                    </figure>
+                </div>
+                <div className="card lg:card-side bg-base-100 shadow-sm">
+                    <figure>
+                        <img
+                            src="./plans.png"
+                            alt="Nurse" />
+                    </figure>
+                    <div className="card-body">
+                        <h2 className="card-title">Future Plans</h2>
+                        <p>Things Yet to Come!</p>
+                        <ul>
+                            <li>Integration with Wearable Devices</li>
+                            <li>Live Data with Epic</li>
+                            <li>Share Diagnosis with Concerned Family</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="card lg:card-side bg-base-100 shadow-sm">
+                    <div className="card-body">
+                        <h2 className="card-title">Get Started</h2>
+                        <p>Don't have an account yet! Create one and get started.</p>
+                        <div className="card-actions justify-start">
+                            <div className="btn btn-outline btn-primary" ><SignUpButton /></div>
+                        </div>
+                    </div>
+                    <figure>
+                        <img
+                            src="./start.jpeg"
+                            alt="Nurse" />
+                    </figure>
+                </div>
+            </div>
+            
         </>
     )
 }
