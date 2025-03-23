@@ -1,8 +1,16 @@
+from dotenv import load_dotenv
+import os
 from fastapi import FastAPI
+from openai import OpenAI
 
+load_dotenv(".env.local")
+openai_key = os.getenv("OPENAI_API_KEY")
 ### Create FastAPI instance with custom docs and openapi url
-app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
 
-@app.get("/api/py/helloFastApi")
-def hello_fast_api():
-    return {"message": "Hello from FastAPI"}
+client = OpenAI(api_key=openai_key)
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Welcome": "everyone!"}
+

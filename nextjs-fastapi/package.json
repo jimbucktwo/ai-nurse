@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.index:app --reload",
+    "fastapi-dev": "pip3 install -r requirements.txt && pip3 install openai && python3 -m uvicorn api.index:app --reload",
     "next-dev": "next dev",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
     "build": "next build",
@@ -21,6 +21,7 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "next": "^14.2.13",
+    "openai": "^4.89.0",
     "postcss": "^8.4.47",
     "react": "18.3.1",
     "react-dom": "18.3.1",
