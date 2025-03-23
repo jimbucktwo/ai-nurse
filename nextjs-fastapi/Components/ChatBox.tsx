@@ -173,9 +173,11 @@ export default function ChatBox() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, conversation: messages }),
       });
+      console.log(res);
       const result = await res.json();
       setReportGenerated(true);
       if (result.error) {
+        console.log(result)
         console.error("❌ Report error:", result.error);
       } else {
         console.log("✅ Report generated:", result);

@@ -28,12 +28,13 @@ export async function POST(req: Request) {
     const fullText = conversation.map((m: any) => m.text).join(" ");
     console.log("🧠 Full text for extraction:", fullText);
 
-    const ageMatch = fullText.match(/(?:age\s*[:\-]?\s*)(\d{1,3})/i);
+    // Improved regex
+    const ageMatch = fullText.match(/(?:\b(?:i am|i'm|age is|age)?\s*)(\d{1,3})(?=\s*(years? old)?\b)/i);
     const genderMatch = fullText.match(/\b(male|female|non-binary|other)\b/i);
-    const severityMatch = fullText.match(/(?:severity[^\d]*)(\d{1,2})/i);
-    const symptomMatch = fullText.match(/symptoms?[:\-]?\s*([^\.\n]+)/i);
-    const diagnosisMatch = fullText.match(/diagnosis(?:es)?[:\-]?\s*(.*?)(?:score|recommendation|$)/i);
-    const remedyMatch = fullText.match(/recommendation[:\-]?\s*(.*?)(?:\n|$)/i);
+    const severityMatch = fullText.match(/(?:severity[^\d]*|\b(?:pain|score)\D*)(\d{1,2})/i);
+    const symptomMatch = fullText.match(/symptoms?[:\-\s]*([^\.\n]+)/i);
+    const diagnosisMatch = fullText.match(/diagnosis(?:es)?[:\-\s]*([^\.\n]+)?/i);
+    const remedyMatch = fullText.match(/recommendation[:\-\s]*([^\.\n]+)?/i);
 
     const pre_diagnosis = diagnosisMatch?.[1]
       ?.split(/,|and/)
@@ -55,7 +56,8 @@ export async function POST(req: Request) {
 
     console.log("🧪 Extraction results:", result);
 
-    if (!result.age && !result.pre_diagnosis.length) {
+    // Loosened condition to allow more partial saves
+    if (!result.symptoms && !result.severityScore && !result.pre_diagnosis.length) {
       return NextResponse.json({ error: "Insufficient data to save report." }, { status: 400 });
     }
 
