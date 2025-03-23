@@ -1,11 +1,12 @@
-"use client";
+"use client"
 import { useEffect, useRef, useState } from "react";
 import OpenAI from "openai";
 import { useAuth } from "@clerk/nextjs";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
-import router from "next/router";
+import { useRouter } from 'next/navigation'
 
 export default function ChatBox() {
+  const router = useRouter()
   const { userId } = useAuth();
   const openai = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -52,7 +53,7 @@ export default function ChatBox() {
         console.error("❌ Report error:", result.error);
       } else {
         console.log("✅ Report generated:", result);
-        router.push(`/report/${result._id}`);
+        router.push(`/Report`);
       }
     } catch (err) {
       console.error("❌ Auto-report error:", err);

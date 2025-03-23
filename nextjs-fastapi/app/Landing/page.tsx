@@ -15,7 +15,9 @@ export default function LandingPage(){
                         <p className="py-6">
                             Nursai is here to help.
                         </p>
-                        <SignInButton className="btn w-sm btn-outline btn-primary" />
+                        <div className="btn w-sm btn-outline btn-primary">
+                            <SignInButton />
+                        </div>
                     </div>
                 </div>
             </div>
