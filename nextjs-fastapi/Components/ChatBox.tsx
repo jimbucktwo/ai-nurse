@@ -1,13 +1,36 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function ChatBox() {
-  const [messages, setMessages] = useState([
-    { id: 1, sender: "ai", text: "Hello, how can I assist you today?" },
-    { id: 2, sender: "user", text: "I have a fever and sore throat." },
-  ]);
-
+  const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("chat_messages");
+    const storedTime = localStorage.getItem("chat_timestamp");
+
+    if (stored && storedTime) {
+      const hoursPassed = (Date.now() - parseInt(storedTime)) / (1000 * 60 * 60);
+      if (hoursPassed < 24) {
+        setMessages(JSON.parse(stored));
+      } else {
+        localStorage.removeItem("chat_messages");
+        localStorage.removeItem("chat_timestamp");
+      }
+    } else {
+      // Default starting message
+      setMessages([
+        { id: 1, sender: "ai", text: "Hello, how can I assist you today?" },
+      ]);
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("chat_messages", JSON.stringify(messages));
+    localStorage.setItem("chat_timestamp", Date.now().toString());
+  }, [messages]);
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -15,16 +38,24 @@ export default function ChatBox() {
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
 
-    // Simulate AI response
+    // Simulate AI response and store history summary
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          sender: "ai",
-          text: "Thanks for the information. I'll help you with that.",
-        },
-      ]);
+      const aiResponse = {
+        id: Date.now() + 1,
+        sender: "ai",
+        text: "Thanks for the information. I'll help you with that.",
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+
+      // Update chat summary for sidebar
+      const summary = {
+        name: "John Doe",
+        age: 30,
+        judgment: "Fever and sore throat",
+      };
+      const storedChats = JSON.parse(localStorage.getItem("chat_summaries") || "[]");
+      storedChats.unshift(summary);
+      localStorage.setItem("chat_summaries", JSON.stringify(storedChats.slice(0, 20)));
     }, 800);
   };
 
