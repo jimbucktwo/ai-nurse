@@ -6,7 +6,7 @@ import {
     SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
-import { Sign } from "crypto";
+
 const Navbar = () => (
   <div className="navbar bg-base-110 ">
     <div className="flex-none">
