@@ -24,19 +24,17 @@ export default function ChatDrawer() {
       <h2 className="text-xl font-bold mb-4 ml-4">Report History</h2>
       <div className="flex-1 overflow-y-auto">
         <ul className="menu rounded-box">
-          {chatList.map((chat, index) => (
-            <li key={index}>
+            <li>
               <div
                 className={`rounded-lg p-3 cursor-pointer ${
-                  activeChat === index ? "bg-primary text-primary-content" : "hover:bg-base-300"
+                  activeChat === true? "bg-primary text-primary-content" : "hover:bg-base-300"
                 }`}
-                onClick={() => setActiveChat(index)}
+                onClick={() => {}}
               >
-                <p className="font-semibold">{chat.name}</p>
-                <p className="text-sm text-gray-500">Age: {chat.age}</p>
+                <p className="font-semibold">March 23rd</p>
+                <p className="text-sm text-gray-500">Age: 25</p>
               </div>
             </li>
-          ))}
         </ul>
       </div>
     </aside>
