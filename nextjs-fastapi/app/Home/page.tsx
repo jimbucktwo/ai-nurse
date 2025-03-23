@@ -1,4 +1,4 @@
-import SideBar from "../../Components/SideBar";
+// import SideBar from "../../Components/SideBar";
 import ChatBox from "../../Components/ChatBox";
 export default function Home() {
     return (
@@ -7,7 +7,7 @@ export default function Home() {
         //     Welcome to the Nursai, a platoform that streamline medical checking-in.
         // </div>
         <div className="flex flex-row items-start justify-start h-screen">
-            <SideBar />
+            {/* <SideBar /> */}
             <ChatBox />
         </div>
     )
