@@ -1,6 +1,4 @@
 import { SignIn, SignInButton, SignUp, SignUpButton } from "@clerk/nextjs";
-import Image from "next/image";
-import Router from "next/router";
 
 export default function LandingPage(){
 
@@ -63,7 +61,7 @@ export default function LandingPage(){
                 <div className="card lg:card-side bg-base-100 shadow-sm">
                     <div className="card-body">
                         <h2 className="card-title">Get Started</h2>
-                        <p>Don't have an account yet! Create one and get started.</p>
+                        <p>Don&apos;t have an account yet! Create one and get started.</p>
                         <div className="card-actions justify-start">
                             <div className="btn btn-outline btn-primary" ><SignUpButton /></div>
                         </div>
