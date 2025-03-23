@@ -21,7 +21,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 max-w-[18rem] h-[95vh] m-4 bg-base-200 p-4 flex flex-col border border-base-300 rounded-2xl shadow-md">
-      <h2 className="text-xl font-bold mb-4">💬 Chat History</h2>
+      <h2 className="text-xl font-bold mb-4">💬 Patients Today</h2>
 
       <div className="flex-1 overflow-y-auto">
         <ul className="menu rounded-box">
