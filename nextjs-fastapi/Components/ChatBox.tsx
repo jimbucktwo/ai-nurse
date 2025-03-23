@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useRef, useState } from "react";
 import OpenAI from "openai";
 
@@ -89,7 +90,8 @@ const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }, [messages]);
 
   return (
-    <div className="flex-1 m-4 h-[95vh] bg-base-100 p-6 rounded-2xl shadow-md overflow-hidden flex flex-col">
+    <>
+    <div className="flex-1 m-4 min-h-[80vh] bg-base-100 p-6 rounded-2xl shadow-md overflow-hidden flex flex-col">
       <h1 className="text-xl font-bold mb-4">🩺 Chat</h1>
 
       {/* Chat message area */}
@@ -133,5 +135,14 @@ const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         </div>
       </div>
     </div>
+    <div>
+      <button className="btn btn-primary w-full rounded-xl" onClick={sendMessage}>
+        + New Chat
+      </button>
+      <button className="btn btn-primary w-full rounded-xl" onClick={sendMessage}>
+        + New Chat
+      </button>
+    </div>
+    </>
   );
 }

@@ -6,7 +6,7 @@ export default function LandingPage(){
 
     return(
         <>
-            <div className="hero min-h-screen" style={{backgroundImage: `url('./nurse.jpg')`}}>
+            <div className="hero min-h-[93vh]" style={{backgroundImage: `url('./nurse.jpg')`}}>
                 <div className="hero-overlay"></div>
                 <div className="hero-content text-center">
                     <div className="max-w-lg">

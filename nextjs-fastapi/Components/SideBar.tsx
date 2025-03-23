@@ -1,3 +1,4 @@
+"use client"
 // import React, { useState } from "react";
 
 // export default function Sidebar() {
@@ -68,9 +69,8 @@ export default function ChatDrawer() {
   }, []);
 
   return (
-    <aside className="w-64 max-w-[18rem] h-[95vh] mt-4 bg-base-200 p-4 flex flex-col border-r border-base-300 rounded-r-2xl shadow-md">
-      <h2 className="text-xl font-bold mb-4">💬 Chat History</h2>
-
+    <aside className="w-64 max-w-[18rem] h-[90vh] mt-4 bg-base-200 p-4 flex flex-col border-r border-base-300 rounded-r-2xl shadow-md">
+      <h2 className="text-xl font-bold mb-4">Report History</h2>
       <div className="flex-1 overflow-y-auto">
         <ul className="menu rounded-box">
           {chatList.map((chat, index) => (
@@ -88,12 +88,6 @@ export default function ChatDrawer() {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className="mt-4">
-        <button className="btn btn-primary w-full rounded-xl">
-          + New Chat
-        </button>
       </div>
     </aside>
   );
