@@ -9,7 +9,6 @@ let socket
 export default function AppPage() {
   const { isSignedIn } = useAuth(); // Call useAuth as a function
   const [loading, setLoading] = useState(true);
-  useEffect(() => socketInitializer(), [])
   useEffect(() => {
     if (isSignedIn !== undefined) {
       setLoading(false);
