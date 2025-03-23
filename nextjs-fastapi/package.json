@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.1.6",
     "@clerk/nextjs": "^6.12.8",
     "@tailwindcss/postcss": "^4.0.15",
     "@types/node": "22.5.5",
@@ -18,8 +19,12 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "concurrently": "^9.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.2",
     "next": "^14.2.13",
     "openai": "^4.89.0",
     "postcss": "^8.4.47",

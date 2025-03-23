@@ -6,7 +6,7 @@ export default function LandingPage(){
 
     return(
         <>
-            <div className="hero min-h-screen" style={{backgroundImage: `url('./nurse.jpg')`}}>
+            <div className="hero min-h-[93vh]" style={{backgroundImage: `url('./nurse.jpg')`}}>
                 <div className="hero-overlay"></div>
                 <div className="hero-content text-center">
                     <div className="max-w-lg">
@@ -15,7 +15,9 @@ export default function LandingPage(){
                         <p className="py-6">
                             Nursai is here to help.
                         </p>
-                        <SignInButton className="btn w-sm btn-outline btn-primary" />
+                        <div className="btn w-sm btn-outline btn-primary">
+                            <SignInButton />
+                        </div>
                     </div>
                 </div>
             </div>
