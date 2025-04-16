@@ -27,7 +27,7 @@ export default function ChatDrawer() {
             <li>
               <div
                 className={`rounded-lg p-3 cursor-pointer ${
-                  activeChat === true? "bg-primary text-primary-content" : "hover:bg-base-300"
+                  activeChat !== null ? "bg-primary text-primary-content" : "hover:bg-base-300"
                 }`}
                 onClick={() => {}}
               >
